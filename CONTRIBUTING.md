@@ -1,57 +1,59 @@
 # Contributing to AgentNest
 
-Thank you for your interest in contributing! Here's how you can help.
+First off, thanks for considering contributing to AgentNest! 🎉
 
-## Getting Started
+## Code of Conduct
 
-1. **Fork the repository**
-   ```bash
-   git clone https://github.com/yourusername/agentnest.git
-   cd agentnest
-   ```
+This project and everyone participating in it is governed by our Code of Conduct. By participating, you are expected to uphold this code.
 
-2. **Create a feature branch**
-   ```bash
-   git checkout -b feature/your-feature-name
-   ```
+## How Can I Contribute?
 
-3. **Make your changes**
-   - Follow the existing code style
-   - Add tests for new functionality
-   - Update documentation as needed
+### Reporting Bugs
+- Use the issue tracker
+- Check if the bug has already been reported
+- Provide detailed steps to reproduce
+- Include screenshots/logs if applicable
 
-4. **Commit your changes**
-   ```bash
-   git commit -m "Add description of your changes"
-   ```
+### Suggesting Enhancements
+- Use the issue tracker with `[FEATURE]` label
+- Describe the problem it solves
+- Provide examples
 
-5. **Push to your fork**
-   ```bash
-   git push origin feature/your-feature-name
-   ```
+### Pull Requests
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit changes (`git commit -m 'Add amazing feature'`)
+4. Push to branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-6. **Open a Pull Request**
-   - Describe what your PR does
-   - Link any related issues
-   - Ensure tests pass
+## Development Setup
 
-## Code Style
+See [DEVELOPMENT.md](./DEVELOPMENT.md) for detailed setup instructions.
 
-- **Backend**: Follow PEP 8
-- **Frontend**: Use ESLint configuration
-- **Git**: Use conventional commits (feat:, fix:, docs:, etc.)
+## Styleguides
 
-## Reporting Issues
+### Python
+- Follow PEP 8
+- Use type hints
+- Use f-strings for formatting
 
-Use GitHub Issues to report:
-- Bugs with reproducible steps
-- Feature requests with use cases
-- Documentation improvements
+### TypeScript/React
+- Use functional components
+- Use hooks
+- Follow ESLint configuration
+
+## Testing
+
+Please include tests for new functionality:
+
+```bash
+# Backend
+pytest tests/
+
+# Frontend
+npm test
+```
 
 ## Questions?
 
-Open a discussion or reach out to the maintainers.
-
----
-
-**Thank you for making AgentNest better! 🚀**
+Feel free to open an issue or reach out to maintainers.

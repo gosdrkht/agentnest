@@ -1,28 +1,26 @@
 version: '3.8'
 
 services:
-  # PostgreSQL Database
-  postgres:
+  db:
     image: postgres:15-alpine
-    container_name: agentnest_postgres
+    container_name: agentnest-db
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
+      POSTGRES_USER: agentnest
+      POSTGRES_PASSWORD: agentnest_password
       POSTGRES_DB: agentnest
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ["CMD-SHELL", "pg_isready -U agentnest"]
       interval: 10s
       timeout: 5s
       retries: 5
 
-  # Redis Cache
   redis:
     image: redis:7-alpine
-    container_name: agentnest_redis
+    container_name: agentnest-redis
     ports:
       - "6379:6379"
     volumes:
@@ -33,42 +31,28 @@ services:
       timeout: 5s
       retries: 5
 
-  # Backend API
   backend:
-    build: ./backend
-    container_name: agentnest_backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: agentnest-backend
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
     ports:
       - "8000:8000"
     environment:
-      DATABASE_URL: postgresql://postgres:password@postgres:5432/agentnest
-      REDIS_URL: redis://redis:6379
+      DATABASE_URL: postgresql://agentnest:agentnest_password@db:5432/agentnest
+      REDIS_URL: redis://redis:6379/0
+      SECRET_KEY: dev-secret-key-change-in-production
       DEBUG: "True"
-      ENVIRONMENT: development
-    depends_on:
-      postgres:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
     volumes:
       - ./backend:/app
       - /var/run/docker.sock:/var/run/docker.sock
-    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
-
-  # Frontend (optional for docker-compose)
-  # frontend:
-  #   build: ./frontend
-  #   container_name: agentnest_frontend
-  #   ports:
-  #     - "3000:3000"
-  #   environment:
-  #     REACT_APP_API_URL: http://localhost:8000/api
-  #   depends_on:
-  #     - backend
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
 
 volumes:
   postgres_data:
   redis_data:
-
-networks:
-  default:
-    name: agentnest_network
