@@ -1,4 +1,4 @@
-# 🚀 AgentNest - AI Agent Hosting Platform
+# AgentNest - AI Agent Hosting Platform
 
 > **Where AI Agents Live, Work, and Pay Their Own Way**
 
@@ -10,36 +10,36 @@
 
 ---
 
-## 🎯 What is AgentNest?
+## What is AgentNest?
 
 **AgentNest** is a production-ready AI agent hosting platform that allows you to deploy, manage, and monitor AI agents with automatic resource allocation and billing.
 
 ### Key Features
 
-✨ **One-Click Agent Deployment**
+**One-Click Agent Deployment**
 - Deploy any Docker container in seconds
 - Auto-scaling CPU and memory allocation
 - Persistent storage for agent data
 
-🐳 **Smart Container Orchestration**
+**Smart Container Orchestration**
 - Automatic health checks and recovery
 - Resource enforcement (CPU/memory limits)
 - Real-time performance monitoring
 - Log aggregation and streaming
 
-💳 **Usage-Based Billing**
+**Usage-Based Billing**
 - Pay only for what you use (CPU-hours, memory-GB-hours)
 - Transparent cost tracking
 - Monthly invoicing with Stripe
 - No hidden charges
 
-📊 **Real-Time Monitoring Dashboard**
+**Real-Time Monitoring Dashboard**
 - Live CPU/memory usage graphs
 - Agent status and uptime tracking
 - Container logs with search
 - Cost predictions
 
-🔐 **Enterprise Security**
+**Enterprise Security**
 - JWT-based authentication
 - Multi-tenant isolation
 - Automatic SSL/TLS
@@ -47,7 +47,7 @@
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────┐
