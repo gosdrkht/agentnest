@@ -28,8 +28,8 @@
                     <li><a href="#security">Security</a></li>
                 </ul>
                 <div class="nav-buttons">
-                    <a href="https://app.agentnest.io/login" class="btn btn-outline">Login</a>
-                    <a href="https://app.agentnest.io/signup" class="btn btn-primary">Get Started</a>
+                    <a href="https://agentnest-beta.vercel.app/login" class="btn btn-outline">Login</a>
+                    <a href="https://agentnest-beta.vercel.app/signup" class="btn btn-primary">Get Started</a>
                 </div>
             </div>
         </div>
@@ -47,49 +47,12 @@
                 <p class="hero-subtitle">Stop wrestling with infrastructure. AgentNest handles Docker, scaling, and billing so you can focus on building.</p>
                 
                 <div class="hero-buttons">
-                    <a href="https://app.agentnest.io/signup" class="btn btn-primary btn-large">
+                    <a href="https://agentnest-beta.vercel.app/signup" class="btn btn-primary btn-large">
                         Start Free Trial
                     </a>
-                    <a href="#demo" class="btn btn-outline btn-large">
-                        ▶ Watch Demo
+                    <a href="#features" class="btn btn-outline btn-large">
+                        Learn More
                     </a>
-                </div>
-                
-                <div class="hero-features">
-                    <div class="feature-chip">✅ No credit card required</div>
-                    <div class="feature-chip">✅ Free tier included</div>
-                    <div class="feature-chip">✅ Deploy in 30 seconds</div>
-                </div>
-            </div>
-            <div class="hero-image">
-                <div class="dashboard-preview">
-                    <div class="window-header">
-                        <div class="dots"></div>
-                    </div>
-                    <div class="dashboard-grid">
-                        <div class="agent-card running">
-                            <div class="agent-title">My AI Bot</div>
-                            <div class="agent-status">● Running</div>
-                            <div class="agent-stats">
-                                <div class="stat">CPU: 45%</div>
-                                <div class="stat">Memory: 256MB</div>
-                            </div>
-                        </div>
-                        <div class="agent-card stopped">
-                            <div class="agent-title">Data Processor</div>
-                            <div class="agent-status">● Stopped</div>
-                            <div class="agent-stats">
-                                <div class="stat">Cost: $4.20/mo</div>
-                            </div>
-                        </div>
-                        <div class="agent-card deploying">
-                            <div class="agent-title">New Agent</div>
-                            <div class="agent-status">⟳ Deploying...</div>
-                            <div class="agent-stats">
-                                <div class="stat">ETA: 5 seconds</div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -98,75 +61,66 @@
     <!-- Features Section -->
     <section id="features" class="features">
         <div class="container">
-            <h2 class="section-title">Why Choose AgentNest?</h2>
-            <p class="section-subtitle">Everything you need to run AI agents in production</p>
-            
+            <h2>Why Choose AgentNest?</h2>
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon">🐳</div>
-                    <h3>One-Click Deployment</h3>
-                    <p>Deploy any Docker container in seconds. No Dockerfile needed. Just pick an image and go.</p>
+                    <h3>Docker Native</h3>
+                    <p>Deploy any containerized AI agent with a single command. Full Docker support out of the box.</p>
                 </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3>Real-Time Monitoring</h3>
-                    <p>Live CPU, memory, and uptime tracking. Get alerts before things break.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">💰</div>
-                    <h3>Usage-Based Billing</h3>
-                    <p>Pay only for what you use. $0.0116/CPU-hour. Transparent pricing. No surprises.</p>
-                </div>
-                
                 <div class="feature-card">
                     <div class="feature-icon">⚡</div>
-                    <h3>Auto-Scaling</h3>
-                    <p>Automatic health checks, crash recovery, and resource optimization.</p>
+                    <h3>Auto Scaling</h3>
+                    <p>Automatically scale your agents based on demand. Pay only for what you use.</p>
                 </div>
-                
                 <div class="feature-card">
-                    <div class="feature-icon">🔐</div>
+                    <div class="feature-icon">💳</div>
+                    <h3>Simple Billing</h3>
+                    <p>Transparent, usage-based pricing. No hidden fees, no surprises.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
                     <h3>Enterprise Security</h3>
-                    <p>JWT authentication, TLS encryption, multi-tenant isolation, and compliance-ready.</p>
+                    <p>SOC 2 compliant infrastructure with end-to-end encryption and audit logs.</p>
                 </div>
-                
                 <div class="feature-card">
-                    <div class="feature-icon">📈</div>
-                    <h3>Scale Without Limits</h3>
-                    <p>Start small, grow big. Handles 1,000+ agents. Built for production.</p>
+                    <div class="feature-icon">📊</div>
+                    <h3>Real-time Monitoring</h3>
+                    <p>Monitor agent performance with detailed metrics and logs.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <h3>One-Click Deploy</h3>
+                    <p>Deploy from GitHub, Docker Hub, or any registry. Zero configuration needed.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- How It Works -->
+    <!-- How It Works Section -->
     <section class="how-it-works">
         <div class="container">
-            <h2 class="section-title">How It Works in 3 Steps</h2>
-            
-            <div class="steps-container">
+            <h2>How It Works</h2>
+            <div class="steps">
                 <div class="step">
                     <div class="step-number">1</div>
-                    <h3>Sign Up</h3>
-                    <p>Create your free account. No credit card required.</p>
+                    <h3>Push Your Docker Image</h3>
+                    <p>Deploy your AI agent as a Docker container to AgentNest</p>
                 </div>
-                
-                <div class="step-arrow">→</div>
-                
                 <div class="step">
                     <div class="step-number">2</div>
-                    <h3>Deploy Agent</h3>
-                    <p>Pick a Docker image. Set resource limits. Click deploy.</p>
+                    <h3>Configure & Deploy</h3>
+                    <p>Set environment variables, resources, and scaling policies</p>
                 </div>
-                
-                <div class="step-arrow">→</div>
-                
                 <div class="step">
                     <div class="step-number">3</div>
                     <h3>Monitor & Scale</h3>
-                    <p>Watch real-time stats. Start/stop/delete agents anytime.</p>
+                    <p>Watch your agents run with automatic scaling and monitoring</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Pay As You Go</h3>
+                    <p>Simple, transparent billing based on actual usage</p>
                 </div>
             </div>
         </div>
@@ -175,92 +129,42 @@
     <!-- Pricing Section -->
     <section id="pricing" class="pricing">
         <div class="container">
-            <h2 class="section-title">Simple, Transparent Pricing</h2>
-            <p class="section-subtitle">Pay only for what you use. No setup fees. Cancel anytime.</p>
-            
-            <div class="pricing-toggle">
-                <button class="toggle-btn active" onclick="togglePricing('monthly')">Monthly</button>
-                <button class="toggle-btn" onclick="togglePricing('annual')">Annual</button>
-            </div>
-            
-            <div class="pricing-grid">
-                <!-- Free Tier -->
+            <h2>Simple, Transparent Pricing</h2>
+            <div class="pricing-cards">
                 <div class="pricing-card">
-                    <div class="pricing-header">
-                        <h3>Starter</h3>
-                        <p class="price">$0<span>/month</span></p>
-                        <p class="description">Perfect for tinkering</p>
-                    </div>
-                    <ul class="pricing-features">
-                        <li>✓ 1 agent</li>
-                        <li>✓ 512MB memory</li>
-                        <li>✓ 0.5 CPU cores</li>
-                        <li>✓ Basic monitoring</li>
-                        <li>✗ Email support</li>
+                    <h3>Free Tier</h3>
+                    <div class="price">$0<span>/mo</span></div>
+                    <ul>
+                        <li>✓ 2 agents</li>
+                        <li>✓ 1GB RAM</li>
+                        <li>✓ Community support</li>
+                        <li>✗ Auto-scaling</li>
                     </ul>
-                    <a href="https://app.agentnest.io/signup" class="btn btn-outline btn-block">Get Started Free</a>
+                    <a href="https://agentnest-beta.vercel.app/signup" class="btn btn-outline">Get Started</a>
                 </div>
-                
-                <!-- Pro Tier -->
                 <div class="pricing-card featured">
-                    <div class="pricing-badge">Most Popular</div>
-                    <div class="pricing-header">
-                        <h3>Professional</h3>
-                        <p class="price">$29<span>/month</span></p>
-                        <p class="description">For growing teams</p>
-                    </div>
-                    <ul class="pricing-features">
-                        <li>✓ Unlimited agents</li>
-                        <li>✓ 4GB memory</li>
-                        <li>✓ 2 CPU cores</li>
-                        <li>✓ Real-time analytics</li>
+                    <div class="badge">Popular</div>
+                    <h3>Professional</h3>
+                    <div class="price">$29<span>/mo</span></div>
+                    <ul>
+                        <li>✓ 10 agents</li>
+                        <li>✓ 10GB RAM</li>
                         <li>✓ Email support</li>
+                        <li>✓ Auto-scaling</li>
                     </ul>
-                    <a href="https://app.agentnest.io/signup" class="btn btn-primary btn-block">Start 30-Day Trial</a>
+                    <a href="https://agentnest-beta.vercel.app/signup" class="btn btn-primary">Get Started</a>
                 </div>
-                
-                <!-- Enterprise Tier -->
                 <div class="pricing-card">
-                    <div class="pricing-header">
-                        <h3>Enterprise</h3>
-                        <p class="price">Custom<span>/month</span></p>
-                        <p class="description">For large-scale deployments</p>
-                    </div>
-                    <ul class="pricing-features">
-                        <li>✓ Unlimited everything</li>
-                        <li>✓ Dedicated support</li>
+                    <h3>Enterprise</h3>
+                    <div class="price">Custom</div>
+                    <ul>
+                        <li>✓ Unlimited agents</li>
+                        <li>✓ Custom resources</li>
+                        <li>✓ Priority support</li>
                         <li>✓ SLA guarantee</li>
-                        <li>✓ Custom integrations</li>
-                        <li>✓ On-premise option</li>
                     </ul>
-                    <a href="mailto:sales@agentnest.io" class="btn btn-outline btn-block">Contact Sales</a>
+                    <a href="mailto:vidurangamts@gmail.com" class="btn btn-outline">Contact Sales</a>
                 </div>
-            </div>
-            
-            <div class="pricing-table">
-                <h3>Resource Pricing (Usage-Based)</h3>
-                <table>
-                    <tr>
-                        <th>Resource</th>
-                        <th>Price</th>
-                        <th>Example</th>
-                    </tr>
-                    <tr>
-                        <td>CPU Hours</td>
-                        <td>$0.0116/hour</td>
-                        <td>1 core, 24/7 = $8.38/mo</td>
-                    </tr>
-                    <tr>
-                        <td>Memory GB-Hours</td>
-                        <td>$0.0024/hour</td>
-                        <td>512MB, 24/7 = $0.88/mo</td>
-                    </tr>
-                    <tr>
-                        <td>Storage</td>
-                        <td>Included</td>
-                        <td>$0</td>
-                    </tr>
-                </table>
             </div>
         </div>
     </section>
@@ -268,125 +172,23 @@
     <!-- Security Section -->
     <section id="security" class="security">
         <div class="container">
-            <h2 class="section-title">Enterprise-Grade Security</h2>
-            <p class="section-subtitle">Your agents are safe with us</p>
-            
-            <div class="security-grid">
-                <div class="security-card">
-                    <div class="security-icon">🔒</div>
-                    <h3>Encryption</h3>
-                    <p>TLS 1.2+, AES-256 encryption at rest</p>
+            <h2>Enterprise-Grade Security</h2>
+            <div class="security-features">
+                <div class="security-item">
+                    <h4>🔐 Encrypted</h4>
+                    <p>All data encrypted in transit and at rest with AES-256</p>
                 </div>
-                <div class="security-card">
-                    <div class="security-icon">👤</div>
-                    <h3>Authentication</h3>
-                    <p>JWT tokens, 2FA ready, OAuth support</p>
+                <div class="security-item">
+                    <h4>🛡️ Compliant</h4>
+                    <p>SOC 2 Type II certified and GDPR compliant</p>
                 </div>
-                <div class="security-card">
-                    <div class="security-icon">🏢</div>
-                    <h3>Compliance</h3>
-                    <p>SOC 2 Type II, GDPR ready</p>
+                <div class="security-item">
+                    <h4>📝 Audited</h4>
+                    <p>Complete audit logs for all actions and access</p>
                 </div>
-                <div class="security-card">
-                    <div class="security-icon">🔐</div>
-                    <h3>Isolation</h3>
-                    <p>Multi-tenant with strong boundaries</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials Section -->
-    <section class="testimonials">
-        <div class="container">
-            <h2 class="section-title">Trusted by Developers</h2>
-            
-            <div class="testimonials-grid">
-                <div class="testimonial-card">
-                    <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
-                    <p class="testimonial-text">"AgentNest made it so easy to deploy our AI bot. What took us 2 weeks on AWS took 5 minutes here."</p>
-                    <p class="testimonial-author">- Sarah Chen, Founder</p>
-                </div>
-                
-                <div class="testimonial-card">
-                    <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
-                    <p class="testimonial-text">"The billing is so transparent. We pay exactly what we use. No hidden costs like other platforms."</p>
-                    <p class="testimonial-author">- Marcus Johnson, CTO</p>
-                </div>
-                
-                <div class="testimonial-card">
-                    <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
-                    <p class="testimonial-text">"The real-time monitoring saved us from a crash. Alerts notified us immediately."</p>
-                    <p class="testimonial-author">- Lisa Park, DevOps Lead</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section class="faq">
-        <div class="container">
-            <h2 class="section-title">Frequently Asked Questions</h2>
-            
-            <div class="faq-grid">
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
-                        <h3>What Docker images can I deploy?</h3>
-                        <span class="faq-toggle">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Any Docker image from Docker Hub or any public registry. Ubuntu, Python, Node.js, custom images - anything you can containerize.</p>
-                    </div>
-                </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
-                        <h3>Is there a free trial?</h3>
-                        <span class="faq-toggle">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Yes! Start with our free Starter tier (1 agent, 512MB). Or get a 30-day free trial of Professional (no credit card required).</p>
-                    </div>
-                </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
-                        <h3>Can I scale my agents?</h3>
-                        <span class="faq-toggle">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Absolutely. Adjust CPU and memory limits anytime. AgentNest handles auto-scaling, health checks, and crash recovery.</p>
-                    </div>
-                </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
-                        <h3>What about data security?</h3>
-                        <span class="faq-toggle">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>We use TLS encryption, database encryption at rest, multi-tenant isolation, and regular security audits. SOC 2 Type II certified.</p>
-                    </div>
-                </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
-                        <h3>Can I export my data?</h3>
-                        <span class="faq-toggle">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Yes. You own your data. Export logs, metrics, and container configs anytime. No vendor lock-in.</p>
-                    </div>
-                </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
-                        <h3>Do you offer support?</h3>
-                        <span class="faq-toggle">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Free tier gets community support. Professional and Enterprise tiers get email support and priority response.</p>
-                    </div>
+                <div class="security-item">
+                    <h4>🔑 Authentication</h4>
+                    <p>JWT tokens and API keys with role-based access control</p>
                 </div>
             </div>
         </div>
@@ -395,21 +197,9 @@
     <!-- CTA Section -->
     <section class="cta">
         <div class="container">
-            <div class="cta-content">
-                <h2>Ready to Deploy Your First Agent?</h2>
-                <p>Join hundreds of developers using AgentNest to run production AI agents</p>
-                
-                <div class="cta-buttons">
-                    <a href="https://app.agentnest.io/signup" class="btn btn-primary btn-large">
-                        Start Free Trial Now
-                    </a>
-                    <a href="mailto:hello@agentnest.io" class="btn btn-outline btn-large">
-                        Have Questions? Email Us
-                    </a>
-                </div>
-                
-                <p class="cta-footnote">✅ No credit card required • ✅ Free tier forever • ✅ Deploy in 30 seconds</p>
-            </div>
+            <h2>Ready to Deploy Your AI Agent?</h2>
+            <p>Join hundreds of developers already using AgentNest to deploy AI agents at scale.</p>
+            <a href="https://agentnest-beta.vercel.app/signup" class="btn btn-primary btn-large">Get Started Free</a>
         </div>
     </section>
 
@@ -419,66 +209,33 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <h4>AgentNest</h4>
-                    <p>Deploy AI agents in seconds</p>
+                    <p>Deploy AI agents in seconds with simple, transparent pricing.</p>
+                    <div class="social-links">
+                        <a href="https://twitter.com/agentnestsl" target="_blank">Twitter</a>
+                        <li><a href="mailto:vidurangamts@gmail.com">Email</a></li>
+                    </div>
                 </div>
-                
                 <div class="footer-section">
                     <h4>Product</h4>
                     <ul>
                         <li><a href="#features">Features</a></li>
                         <li><a href="#pricing">Pricing</a></li>
-                        <li><a href="https://docs.agentnest.io">Documentation</a></li>
-                        <li><a href="https://github.com/gosdrkht/agentnest">GitHub</a></li>
+                        <li><a href="#security">Security</a></li>
                     </ul>
                 </div>
-                
                 <div class="footer-section">
                     <h4>Company</h4>
                     <ul>
-                        <li><a href="mailto:hello@agentnest.io">Contact</a></li>
-                        <li><a href="/privacy">Privacy</a></li>
-                        <li><a href="/terms">Terms</a></li>
-                        <li><a href="/status">Status Page</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>Follow Us</h4>
-                    <ul>
-                        <li><a href="https://twitter.com/agentnest" target="_blank">Twitter</a></li>
-                        <li><a href="https://discord.gg/agentnest" target="_blank">Discord</a></li>
-                        <li><a href="https://github.com/gosdrkht/agentnest" target="_blank">GitHub</a></li>
+                        <li><a href="https://agentnest-beta.vercel.app/login">Login</a></li>
+                        <li><a href="https://agentnest-beta.vercel.app/signup">Sign Up</a></li>
                     </ul>
                 </div>
             </div>
-            
             <div class="footer-bottom">
-                <p>&copy; 2026 AgentNest. All rights reserved.</p>
-                <div class="tech-stack">
-                    <span>Built with</span>
-                    <img src="https://img.shields.io/badge/FastAPI-0.104-00A651?style=flat" alt="FastAPI">
-                    <img src="https://img.shields.io/badge/React-18-61DAFB?style=flat" alt="React">
-                    <img src="https://img.shields.io/badge/Docker-Supported-2496ED?style=flat" alt="Docker">
-                </div>
+                <p>&copy; 2024 AgentNest. All rights reserved.</p>
             </div>
         </div>
     </footer>
-
-    <!-- Modal for Email Signup -->
-    <div id="emailModal" class="modal">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeEmailModal()">×</button>
-            <h2>Join Our Community</h2>
-            <p>Get early access to new features and tips for deploying agents</p>
-            
-            <form onsubmit="handleEmailSignup(event)">
-                <input type="email" placeholder="your@email.com" required>
-                <button type="submit" class="btn btn-primary">Subscribe</button>
-            </form>
-            
-            <p class="modal-note">We'll never spam you. Unsubscribe anytime.</p>
-        </div>
-    </div>
 
     <script src="script.js"></script>
 </body>
