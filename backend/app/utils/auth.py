@@ -8,7 +8,7 @@ from typing import Optional
 from jose import JWTError, jwt
 from passlib.context import CryptContext
 from fastapi import Depends, HTTPException, status
-from fastapi.security import HTTPBearer, HTTPAuthCredentials
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 import os
 from dotenv import load_dotenv
 
@@ -82,7 +82,7 @@ def verify_access_token(token: str) -> TokenData:
     return token_data
 
 
-async def get_current_user(credentials: HTTPAuthCredentials = Depends(security)) -> TokenData:
+async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)) -> TokenData:
     """Dependency to get current user from JWT token"""
     token = credentials.credentials
     return verify_access_token(token)
