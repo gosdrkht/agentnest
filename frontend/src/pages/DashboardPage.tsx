@@ -7,15 +7,9 @@ import DeployAgentModal from '../components/DeployAgentModal';
 import '../styles/dashboard.css';
 
 interface Agent {
-  id: number;
-  name: string;
-  description: string;
-  docker_image: string;
-  status: string;
-  container_id: string;
-  cpu_limit: number;
-  memory_limit_mb: number;
-  created_at: string;
+  id: number; name: string; description: string;
+  docker_image: string; status: string; container_id: string;
+  cpu_limit: number; memory_limit_mb: number; created_at: string;
 }
 
 function DashboardPage() {
@@ -27,7 +21,6 @@ function DashboardPage() {
 
   useEffect(() => {
     fetchAgents();
-    // Refresh agents every 10 seconds
     const interval = setInterval(fetchAgents, 10000);
     return () => clearInterval(interval);
   }, []);
@@ -49,42 +42,65 @@ function DashboardPage() {
     navigate('/login');
   };
 
-  const handleAgentDeployed = () => {
-    setShowModal(false);
-    fetchAgents();
-  };
+  const running = agents.filter(a => a.status === 'running').length;
+  const stopped = agents.filter(a => a.status === 'stopped').length;
+  const crashed = agents.filter(a => a.status === 'crashed').length;
 
   return (
     <div className="dashboard">
       <header className="dashboard-header">
-        <div className="header-left">
-          <h1>🚀 AgentNest Dashboard</h1>
+        <div className="header-logo">
+          <div className="header-logo-icon">🪺</div>
+          <div className="header-logo-text">Agent<span>Nest</span></div>
         </div>
         <div className="header-right">
-          <div className="user-info">
-            <span>{user?.email}</span>
-            <span className="balance">💰 ${user?.balance.toFixed(2)}</span>
+          <div className="user-chip">
+            <span className="user-email">{user?.email}</span>
+            <span className="user-balance">${Number(user?.balance || 0).toFixed(2)}</span>
           </div>
-          <button onClick={handleLogout} className="btn btn-secondary">
-            Logout
-          </button>
+          <button onClick={handleLogout} className="btn btn-secondary">Logout</button>
         </div>
       </header>
 
       <main className="dashboard-main">
-        <div className="dashboard-controls">
-          <h2>Your Agents</h2>
+        <div className="dashboard-stats">
+          <div className="stat-card">
+            <div className="stat-label">Total Agents</div>
+            <div className="stat-value">{agents.length}</div>
+          </div>
+          <div className="stat-card">
+            <div className="stat-label">Running</div>
+            <div className={`stat-value ${running > 0 ? 'green' : ''}`}>{running}</div>
+          </div>
+          <div className="stat-card">
+            <div className="stat-label">Stopped</div>
+            <div className={`stat-value ${stopped > 0 ? 'yellow' : ''}`}>{stopped}</div>
+          </div>
+          <div className="stat-card">
+            <div className="stat-label">Crashed</div>
+            <div className={`stat-value ${crashed > 0 ? 'red' : ''}`}>{crashed}</div>
+          </div>
+        </div>
+
+        <div className="section-header">
+          <div className="section-title">Your Agents</div>
           <button onClick={() => setShowModal(true)} className="btn btn-primary">
-            ➕ Deploy New Agent
+            + Deploy Agent
           </button>
         </div>
 
         {loading ? (
-          <div className="loading">Loading agents...</div>
+          <div style={{ color: 'var(--text2)', padding: '40px', textAlign: 'center', fontSize: '13px' }}>
+            Loading agents...
+          </div>
         ) : agents.length === 0 ? (
           <div className="empty-state">
+            <div className="empty-state-icon">🤖</div>
             <p>No agents deployed yet</p>
-            <p>Click "Deploy New Agent" to get started</p>
+            <p>Deploy your first AI agent to get started</p>
+            <button onClick={() => setShowModal(true)} className="btn btn-primary">
+              + Deploy First Agent
+            </button>
           </div>
         ) : (
           <AgentList agents={agents} onRefresh={fetchAgents} />
@@ -92,7 +108,10 @@ function DashboardPage() {
       </main>
 
       {showModal && (
-        <DeployAgentModal onClose={() => setShowModal(false)} onSuccess={handleAgentDeployed} />
+        <DeployAgentModal
+          onClose={() => setShowModal(false)}
+          onSuccess={() => { setShowModal(false); fetchAgents(); }}
+        />
       )}
     </div>
   );
