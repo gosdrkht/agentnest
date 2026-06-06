@@ -1,0 +1,8 @@
+# AgentNest landing page - SEO robots.txt
+
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /api
+
+Sitemap: https://agentnest.io/sitemap.xml
