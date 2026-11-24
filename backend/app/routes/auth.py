@@ -22,7 +22,7 @@ from app.utils.auth import (
 router = APIRouter(prefix="/api/auth", tags=["auth"])
 
 
-@router.post("/signup", response_model=UserSchema)
+@router.post("/signup", response_model=UserSchema, status_code=status.HTTP_201_CREATED)
 async def signup(user_create: UserCreate, db: Session = Depends(get_db)):
     """
     Create a new user account
@@ -47,6 +47,7 @@ async def signup(user_create: UserCreate, db: Session = Depends(get_db)):
     db_user = User(
         email=user_create.email,
         username=user_create.username,
+        full_name=user_create.full_name,
         password_hash=hashed_password,
         is_active=True,
         balance=0.0,

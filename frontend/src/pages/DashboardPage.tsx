@@ -14,7 +14,7 @@ interface Agent {
 
 function DashboardPage() {
   const navigate = useNavigate();
-  const { user, setIsAuthenticated } = useContext(AuthContext);
+  const { user, setUser, setIsAuthenticated } = useContext(AuthContext);
   const [agents, setAgents] = useState<Agent[]>([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
@@ -38,6 +38,8 @@ function DashboardPage() {
 
   const handleLogout = () => {
     localStorage.removeItem('token');
+    delete api.defaults.headers.common['Authorization'];
+    setUser(null);
     setIsAuthenticated(false);
     navigate('/login');
   };

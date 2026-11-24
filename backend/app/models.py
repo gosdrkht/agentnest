@@ -1,8 +1,7 @@
-from sqlalchemy import Column, Integer, String, Text, DateTime, Boolean, Numeric, ForeignKey, TIMESTAMP
+from sqlalchemy import Column, Integer, String, Text, Boolean, Numeric, ForeignKey, TIMESTAMP
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from app.database import Base
-from datetime import datetime
 
 class User(Base):
     __tablename__ = "users"
@@ -30,13 +29,15 @@ class Agent(Base):
     name = Column(String(255), nullable=False)
     description = Column(Text)
     docker_image = Column(String(255), nullable=False)
-    status = Column(String(50), default="stopped")  # running, stopped, crashed, pending
+    status = Column(String(50), default="stopped")  # running, stopped, crashed, pending, deploying
     container_id = Column(String(255))
     cpu_limit = Column(Numeric(10, 2), default=1.0)
     memory_limit_mb = Column(Integer, default=512)
     created_at = Column(TIMESTAMP(timezone=True), server_default=func.now())
     updated_at = Column(TIMESTAMP(timezone=True), server_default=func.now(), onupdate=func.now())
     last_run = Column(TIMESTAMP(timezone=True))
+    last_started = Column(TIMESTAMP(timezone=True))
+    last_stopped = Column(TIMESTAMP(timezone=True))
     logs = Column(Text)
 
     # Relationships

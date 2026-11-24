@@ -5,10 +5,10 @@ Handles container lifecycle, resource enforcement, log streaming, health checks
 
 import docker
 import logging
+import re
 from typing import Optional, Dict, List
 from docker.errors import APIError, ImageNotFound
-import asyncio
-from datetime import datetime
+from datetime import datetime, timezone
 
 logger = logging.getLogger(__name__)
 
@@ -74,13 +74,13 @@ class DockerService:
                 image=docker_image,
                 name=container_name,
                 detach=True,
-                restart_policy={"Name": "unless-stopped", "MaximumRetryCount": 5},
+                restart_policy={"Name": "unless-stopped"},
                 network=self.network_name,
                 environment=environment or {},
                 labels={
                     "agentnest.agent_id": str(agent_id),
                     "agentnest.user_id": str(user_id),
-                    "agentnest.deployed": datetime.utcnow().isoformat(),
+                    "agentnest.deployed": datetime.now(timezone.utc).isoformat(),
                 },
                 # Resource constraints
                 mem_limit=mem_limit,
@@ -160,7 +160,7 @@ class DockerService:
         try:
             container_name = f"agent-{user_id}-{agent_id}"
             container = self.client.containers.get(container_name)
-            logs = container.logs(tail=tail, timestamps=True).decode("utf-8")
+            logs = container.logs(tail=tail, timestamps=True).decode("utf-8", errors="replace")
             return logs
         except docker.errors.NotFound:
             return "Container not found"
@@ -173,7 +173,7 @@ class DockerService:
             container_name = f"agent-{user_id}-{agent_id}"
             container = self.client.containers.get(container_name)
             for line in container.logs(stream=True, follow=True):
-                yield line.decode("utf-8").strip()
+                yield line.decode("utf-8", errors="replace").strip()
         except docker.errors.NotFound:
             yield "Container not found"
         except APIError as e:
@@ -187,25 +187,33 @@ class DockerService:
 
             stats = container.stats(stream=False)
 
-            # Calculate CPU percentage
+            # Calculate CPU percentage safely
+            cpu_stats = stats.get("cpu_stats", {})
+            precpu_stats = stats.get("precpu_stats", {})
             cpu_delta = (
-                stats["cpu_stats"]["cpu_usage"]["total_usage"]
-                - stats["precpu_stats"]["cpu_usage"]["total_usage"]
+                cpu_stats.get("cpu_usage", {}).get("total_usage", 0)
+                - precpu_stats.get("cpu_usage", {}).get("total_usage", 0)
             )
             system_delta = (
-                stats["cpu_stats"]["system_cpu_usage"]
-                - stats["precpu_stats"]["system_cpu_usage"]
+                cpu_stats.get("system_cpu_usage", 0)
+                - precpu_stats.get("system_cpu_usage", 0)
+            )
+            online_cpus = (
+                cpu_stats.get("online_cpus")
+                or len(cpu_stats.get("cpu_usage", {}).get("percpu_usage") or [])
+                or 1
             )
             cpu_percent = (
-                (cpu_delta / system_delta) * len(stats["cpu_stats"]["cpus"]) * 100
-                if system_delta > 0
-                else 0
+                (cpu_delta / system_delta) * online_cpus * 100.0
+                if system_delta > 0 and cpu_delta >= 0
+                else 0.0
             )
 
             # Memory usage
-            memory_usage = stats["memory_stats"]["usage"]
-            memory_limit = stats["memory_stats"]["limit"]
-            memory_percent = (memory_usage / memory_limit * 100) if memory_limit > 0 else 0
+            memory_stats = stats.get("memory_stats", {})
+            memory_usage = memory_stats.get("usage", 0)
+            memory_limit = memory_stats.get("limit", 0)
+            memory_percent = (memory_usage / memory_limit * 100.0) if memory_limit > 0 else 0.0
 
             return {
                 "container_id": container.short_id,
@@ -223,11 +231,14 @@ class DockerService:
 
     def _get_uptime(self, container) -> int:
         """Calculate container uptime in seconds"""
-        import time
-
-        start_time = datetime.fromisoformat(container.attrs["State"]["StartedAt"].replace("Z", "+00:00"))
-        uptime = (datetime.now(start_time.tzinfo) - start_time).total_seconds()
-        return int(uptime)
+        started_at = container.attrs.get("State", {}).get("StartedAt", "")
+        if not started_at or started_at.startswith("0001-01-01"):
+            return 0
+        # Truncate nanoseconds to microseconds for reliable ISO-8601 parsing
+        normalized = re.sub(r"(\.\d{6})\d+", r"\1", started_at).replace("Z", "+00:00")
+        start_time = datetime.fromisoformat(normalized)
+        uptime = (datetime.now(start_time.tzinfo or timezone.utc) - start_time).total_seconds()
+        return max(0, int(uptime))
 
     def list_agents(self, user_id: int) -> List[Dict]:
         """List all containers for a user"""

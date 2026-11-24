@@ -11,11 +11,9 @@ load_dotenv()
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Import models to create tables
+# Import database and models so all tables are registered on Base.metadata
 from app.database import Base, engine
-
-# Create tables on startup
-Base.metadata.create_all(bind=engine)
+from app import models  # noqa: F401
 
 # Import route handlers
 from app.routes.auth import router as auth_router
@@ -26,6 +24,7 @@ from app.routes.agents import router as agents_router
 async def lifespan(app: FastAPI):
     # Startup
     logger.info("🚀 AgentNest API Starting...")
+    Base.metadata.create_all(bind=engine)
     logger.info("📦 Database tables created")
     logger.info("🐳 Docker service initialized")
     yield
@@ -41,7 +40,11 @@ app = FastAPI(
 )
 
 # CORS Configuration
-cors_origins = os.getenv("CORS_ORIGINS", "http://localhost:3000,http://localhost:8000").split(",")
+cors_origins = [
+    origin.strip()
+    for origin in os.getenv("CORS_ORIGINS", "http://localhost:3000,http://localhost:5173,http://localhost:8000").split(",")
+    if origin.strip()
+]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=cors_origins,

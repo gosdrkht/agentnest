@@ -331,7 +331,7 @@ docker-compose up -d
 # Check .env file
 cat frontend/.env
 
-# Should contain: REACT_APP_API_URL=http://localhost:8000
+# Should contain: VITE_API_URL=http://localhost:8000
 
 # Clear browser cache and restart
 ```

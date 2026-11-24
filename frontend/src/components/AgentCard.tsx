@@ -39,19 +39,26 @@ function AgentCard({ agent, onRefresh }: Props) {
       fetchStats();
       const interval = setInterval(fetchStats, 5000);
       return () => clearInterval(interval);
+    } else {
+      setStats(null);
     }
-  }, [agent.status]);
+  }, [agent.id, agent.status]);
 
   const fetchStats = async () => {
     try {
       const response = await api.get(`/api/agents/${agent.id}/stats`);
-      setStats(response.data.stats);
+      if (response.data.stats && !response.data.stats.error) {
+        setStats(response.data.stats);
+      } else {
+        setStats(null);
+      }
     } catch (error) {
       console.error('Failed to fetch stats:', error);
     }
   };
 
   const fetchLogs = async () => {
+    setError('');
     try {
       const response = await api.get(`/api/agents/${agent.id}/logs`);
       setLogs(response.data.logs);
@@ -62,6 +69,7 @@ function AgentCard({ agent, onRefresh }: Props) {
   };
 
   const handleStart = async () => {
+    setError('');
     setLoading(true);
     try {
       await api.post(`/api/agents/${agent.id}/start`);
@@ -74,6 +82,7 @@ function AgentCard({ agent, onRefresh }: Props) {
   };
 
   const handleStop = async () => {
+    setError('');
     setLoading(true);
     try {
       await api.post(`/api/agents/${agent.id}/stop`);
@@ -87,6 +96,7 @@ function AgentCard({ agent, onRefresh }: Props) {
 
   const handleDelete = async () => {
     if (window.confirm('Are you sure you want to delete this agent?')) {
+      setError('');
       setLoading(true);
       try {
         await api.delete(`/api/agents/${agent.id}`);

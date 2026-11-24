@@ -3,13 +3,13 @@ Agent API Routes
 Endpoints for deploying, managing, and monitoring AI agents
 """
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.orm import Session
 from typing import List
-from datetime import datetime
+from datetime import datetime, timezone
 
 from app.database import get_db
-from app.models import Agent, User
+from app.models import Agent
 from app.schemas import Agent as AgentSchema, AgentCreate, AgentUpdate
 from app.utils.auth import get_current_user, TokenData
 from app.services.docker_service import get_docker_service
@@ -17,7 +17,7 @@ from app.services.docker_service import get_docker_service
 router = APIRouter(prefix="/api/agents", tags=["agents"])
 
 
-@router.post("/", response_model=AgentSchema)
+@router.post("", response_model=AgentSchema, status_code=status.HTTP_201_CREATED)
 async def deploy_agent(
     agent_create: AgentCreate,
     current_user: TokenData = Depends(get_current_user),
@@ -33,7 +33,7 @@ async def deploy_agent(
     - **memory_limit_mb**: Memory in MB (default: 512)
     """
     try:
-        # Create database record
+        # Create database record inside transaction so failure rolls back cleanly
         db_agent = Agent(
             user_id=current_user.user_id,
             name=agent_create.name,
@@ -44,8 +44,7 @@ async def deploy_agent(
             status="deploying",
         )
         db.add(db_agent)
-        db.commit()
-        db.refresh(db_agent)
+        db.flush()
 
         # Deploy container
         docker_svc = get_docker_service()
@@ -59,9 +58,11 @@ async def deploy_agent(
         )
 
         # Update agent with container info
+        now = datetime.now(timezone.utc)
         db_agent.container_id = result["container_id"]
         db_agent.status = "running"
-        db_agent.last_started = datetime.utcnow()
+        db_agent.last_run = now
+        db_agent.last_started = now
         db.commit()
         db.refresh(db_agent)
 
@@ -72,7 +73,7 @@ async def deploy_agent(
         raise HTTPException(status_code=400, detail=f"Failed to deploy agent: {str(e)}")
 
 
-@router.get("/", response_model=List[AgentSchema])
+@router.get("", response_model=List[AgentSchema])
 async def list_agents(
     current_user: TokenData = Depends(get_current_user),
     db: Session = Depends(get_db),
@@ -116,7 +117,7 @@ async def update_agent(
     if not agent:
         raise HTTPException(status_code=404, detail="Agent not found")
 
-    update_data = agent_update.dict(exclude_unset=True)
+    update_data = agent_update.model_dump(exclude_unset=True)
     for field, value in update_data.items():
         setattr(agent, field, value)
 
@@ -144,8 +145,10 @@ async def start_agent(
     success = docker_svc.start_agent(agent_id, current_user.user_id)
 
     if success:
+        now = datetime.now(timezone.utc)
         agent.status = "running"
-        agent.last_started = datetime.utcnow()
+        agent.last_run = now
+        agent.last_started = now
         db.commit()
         return {"status": "started", "agent_id": agent_id}
     else:
@@ -172,7 +175,7 @@ async def stop_agent(
 
     if success:
         agent.status = "stopped"
-        agent.last_stopped = datetime.utcnow()
+        agent.last_stopped = datetime.now(timezone.utc)
         db.commit()
         return {"status": "stopped", "agent_id": agent_id}
     else:
@@ -206,7 +209,7 @@ async def delete_agent(
 @router.get("/{agent_id}/logs")
 async def get_agent_logs(
     agent_id: int,
-    tail: int = 100,
+    tail: int = Query(default=100, ge=1, le=5000),
     current_user: TokenData = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
@@ -225,7 +228,7 @@ async def get_agent_logs(
     return {
         "agent_id": agent_id,
         "logs": logs.split("\n") if logs else [],
-        "timestamp": datetime.utcnow(),
+        "timestamp": datetime.now(timezone.utc),
     }
 
 
@@ -250,5 +253,5 @@ async def get_agent_stats(
     return {
         "agent_id": agent_id,
         "stats": stats,
-        "timestamp": datetime.utcnow(),
+        "timestamp": datetime.now(timezone.utc),
     }
